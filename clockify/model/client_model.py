@@ -1,6 +1,7 @@
 from typing_extensions import Literal
 
 from clockify.model.base_model import BaseModel
+from pydantic import ConfigDict
 
 
 class Client(BaseModel):
@@ -8,9 +9,9 @@ class Client(BaseModel):
     name: str
     workspace_id: str
     archived: bool = False
-
-    class Config:
-        fields = {"id_": "id", "workspace_id": "workspaceId"}
+    # TODO[pydantic]: The following keys were removed: `fields`.
+    # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
+    model_config = ConfigDict(fields={"id_": "id", "workspace_id": "workspaceId"})
 
 
 class ClientGetParams(BaseModel):
@@ -20,15 +21,16 @@ class ClientGetParams(BaseModel):
     page_size: int = 50
     sort_column: Literal["NAME"] = None
     sort_order: Literal["ASCENDING", "DESCENDING"] = None
-
-    class Config:
-        fields = {
-            "page_size": "page-size",
-            "sort_column": "sort-column",
-            "sort_order": "sort-order",
-        }
+    # TODO[pydantic]: The following keys were removed: `fields`.
+    # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
+    model_config = ConfigDict(fields={
+        "page_size": "page-size",
+        "sort_column": "sort-column",
+        "sort_order": "sort-order",
+    })
 
 
 class ClientUpdateParams(BaseModel):
-    class Config:
-        fields = {"archive_projects": "archive-projects"}
+    # TODO[pydantic]: The following keys were removed: `fields`.
+    # Check https://docs.pydantic.dev/dev-v2/migration/#changes-to-config for more information.
+    model_config = ConfigDict(fields={"archive_projects": "archive-projects"})
